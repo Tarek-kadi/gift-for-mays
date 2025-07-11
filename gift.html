@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدية من طارق</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffb3b3 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.5s;
+        }
+        
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            padding: 20px;
+        }
+        
+        /* تذييل الصفحة مع اسم طارق */
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            z-index: 5;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        .footer span {
+            background: rgba(231, 76, 60, 0.8);
+            padding: 5px 15px;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* الصفحة الرئيسية */
+        .home-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: opacity 0.5s;
+            padding-bottom: 60px;
+        }
+        
+        .home-page h1 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e74c3c, 0 0 20px #e74c3c; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #ff7675, 0 0 30px #e74c3c, 0 0 40px #e74c3c; }
+        }
+        
+        .gift-box {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+        
+        .gift-box:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+        
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(145deg, #c0392b, #a5281b);
+            top: 0;
+            left: 0;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 100%;
+            background: linear-gradient(145deg, #c0392b, #a5281b);
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+        
+        .gift-lid {
+            width: 240px;
+            height: 50px;
+            background: linear-gradient(145deg, #c0392b, #a5281b);
+            border-radius: 15px;
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gift-box.open .gift-lid {
+            transform: rotate(15deg) translateY(-120px);
+            opacity: 0.8;
+        }
+        
+        .gift-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.7s;
+            padding: 20px;
+        }
+        
+        .gift-box.open .gift-content {
+            opacity: 1;
+        }
+        
+        .gift-content i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+        }
+        
+        .gift-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        /* ألبوم الصور - تم تحسينه */
+        .memory-album {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .memory-album.active {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .album-container {
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.4s;
+        }
+        
+        .memory-album.active .album-container {
+            transform: scale(1);
+        }
+        
+        .album-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .album-header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .close-album {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .close-album:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            height: 220px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.4s;
+            font-size: 1rem;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* لعبة الدب - تم تحسينها */
+        .bear-game {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .bear-game.active {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .bear-container {
+            max-width: 550px;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.4s;
+        }
+        
+        .bear-game.active .bear-container {
+            transform: scale(1);
+        }
+        
+        .bear-header {
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .bear-header h2 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .bear-character {
+            font-size: 6rem;
+            margin: 25px 0;
+            animation: bounce 2s infinite, rotate 10s infinite linear;
+            display: inline-block;
+            transform-origin: center bottom;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .bear-message {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            border: 1px dashed #e74c3c;
+            transition: all 0.3s;
+        }
+        
+        .bear-message:hover {
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+        }
+        
+        .bear-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            resize: none;
+            font-size: 1rem;
+            transition: border 0.3s;
+            min-height: 100px;
+        }
+        
+        .bear-input:focus {
+            border-color: #e74c3c;
+            outline: none;
+        }
+        
+        .bear-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .bear-btn {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .bear-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .bear-btn:active {
+            transform: translateY(0);
+        }
+        
+        .close-bear {
+            background: linear-gradient(145deg, #555, #333);
+        }
+        
+        /* أزرار التنقل - تم تحسينها */
+        .nav-buttons {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        .nav-buttons.show {
+            opacity: 1;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* تأثير القلوب - تم تحسينه */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 59, 63, 0.8);
+            animation: fall linear forwards;
+            user-select: none;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* تأثيرات دخول الصفحة */
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .home-page h1, .gift-box {
+            animation: slideIn 1s ease-out forwards;
+        }
+        
+        .gift-box {
+            animation-delay: 0.3s;
+        }
+        
+        /* تأثيرات النص */
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #fff;
+            animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #fff }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الصفحة الرئيسية -->
+        <div class="home-page" id="homePage">
+            <h1><span class="typing-effect">هدية من القلب لكِ</span></h1>
+            <div class="gift-box" id="giftBox">
+                <div class="gift-lid"></div>
+                <div class="gift-content">
+                    <i class="fas fa-heart"></i>
+                    <p>اضغطي على الأزرار في الأسفل للانتقال إلى مفاجآتي لكِ</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ألبوم الصور -->
+        <div class="memory-album" id="memoryAlbum">
+            <div class="album-container">
+                <div class="album-header">
+                    <h2>ألبوم ذكرياتنا الجميلة</h2>
+                    <button class="close-album" id="closeAlbum">
+                        <i class="fas fa-times"></i> إغلاق
+                    </button>
+                </div>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="1.jpg" alt="ذكرى 1" sizes="100px">
+                        <div class="gallery-caption">أول يوم التقينا، بداية قصة حبنا ❤️</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2.jpg" alt="ذكرى 2">
+                        <div class="gallery-caption">لما اخدتي موبايلي</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="3.jpg" alt="ذكرى 3">
+                        <div class="gallery-caption">لما كتبتي عمقعدك بلنهج</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="4.jpg" alt="ذكرى 4">
+                        <div class="gallery-caption">لما نغم عملت اسمي </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="5.jpg" alt="ذكرى 5">
+                        <div class="gallery-caption">كيف بدك ايان يكون</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="6.jpg" alt="ذكرى 6">
+                        <div class="gallery-caption">عيد ميلادك مع ارنوبك</div>
+                        
+                    </div>
+                    <div class="gallery-item">
+                        <img src="8.jpg" alt="ذكرى 5">
+                        <div class="gallery-caption">انتي مع رفقاتك بلبكلوريا </div>
+                    </div>
+                    <div><h1 >لاتنسي انك شاطرة وحتنجحي وتتفوقي</h1></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- لعبة الدب -->
+        <div class="bear-game" id="bearGame">
+            <div class="bear-container">
+                <div class="bear-header">
+                    <h2>الدب الحنون</h2>
+                    <p>رسول الحب بيننا</p>
+                </div>
+                <div class="bear-character">🐻</div>
+                <div class="bear-message" id="bearMessage">
+                    مرحبًا يا حبيبة طارق! أنا الدب الحنون، يمكنكِ إرسال رسالة حلوة لطارق وسأوصلها له بكل حب!
+                </div>
+                <textarea class="bear-input" id="bearInput" placeholder="اكتبي رسالة حلوة من القلب..."></textarea>
+                <div class="bear-buttons">
+                    <button class="bear-btn close-bear" id="closeBear">
+                        <i class="fas fa-times"></i> إغلاق
+                    </button>
+                    <button class="bear-btn" id="sendMessage">
+                        <i class="fas fa-paper-plane"></i> إرسال
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- أزرار التنقل -->
+        <div class="nav-buttons" id="navButtons">
+            <button class="nav-btn" id="showAlbum">
+                <i class="fas fa-images"></i> ألبوم الذكريات
+            </button>
+            <button class="nav-btn" id="showBear">
+                <i class="fas fa-comment-dots"></i> التكلم مع الدب
+            </button>
+        </div>
+        
+        <!-- تأثير القلوب -->
+        <div class="hearts" id="hearts"></div>
+        
+        <!-- تذييل الصفحة مع اسم طارق -->
+        <div class="footer">
+            <span>من قلب طارق لكِ ❤️</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر الصفحة
+            const giftBox = document.getElementById('giftBox');
+            const homePage = document.getElementById('homePage');
+            const memoryAlbum = document.getElementById('memoryAlbum');
+            const bearGame = document.getElementById('bearGame');
+            const showAlbum = document.getElementById('showAlbum');
+            const showBear = document.getElementById('showBear');
+            const closeAlbum = document.getElementById('closeAlbum');
+            const closeBear = document.getElementById('closeBear');
+            const sendMessage = document.getElementById('sendMessage');
+            const bearInput = document.getElementById('bearInput');
+            const bearMessage = document.getElementById('bearMessage');
+            const heartsContainer = document.getElementById('hearts');
+            const navButtons = document.getElementById('navButtons');
+            
+            // رسائل الدب
+            const bearMessages = [
+                "طارق يعرف أنكِ شخص مميز وتجعلين حياته أجمل!",
+                "الحب بينكما يجعل حتى الدببة تبتسم! 🐻❤️",
+                "رسالتكِ ستصل لطارق وسيكون سعيدًا جدًا!",
+                "طارق محظوظ لأن لديه شخص رائع مثلكِ!",
+                "كل يوم معكِ هو هدية لطارق!",
+                "رسالتكِ جميلة مثل ابتسامتكِ!",
+                "الحب الحقيقي مثل حبكما، نادر وجميل!",
+                "طارق يريدكِ أن تعرفي كم أنتِ مهمة في حياته!",
+                "أنتِ مصدر سعادة طارق اليومية!",
+                "حتى الدببة تعرف كم يحبكِ طارق!"
+            ];
+            
+            // فتح علبة الهدية
+            giftBox.addEventListener('click', function() {
+                if (!this.classList.contains('open')) {
+                    this.classList.add('open');
+                    createHearts();
+                    
+                    // إظهار أزرار التنقل بعد فتح الهدية
+                    setTimeout(() => {
+                        navButtons.classList.add('show');
+                    }, 1000);
+                }
+            });
+            
+            // عرض ألبوم الصور
+            showAlbum.addEventListener('click', function() {
+                homePage.style.opacity = '0';
+                setTimeout(() => {
+                    homePage.style.display = 'none';
+                    memoryAlbum.classList.add('active');
+                }, 500);
+            });
+            
+            // إغلاق ألبوم الصور
+            closeAlbum.addEventListener('click', function() {
+                memoryAlbum.classList.remove('active');
+                homePage.style.display = 'flex';
+                setTimeout(() => {
+                    homePage.style.opacity = '1';
+                }, 50);
+            });
+            
+            // عرض لعبة الدب
+            showBear.addEventListener('click', function() {
+                homePage.style.opacity = '0';
+                setTimeout(() => {
+                    homePage.style.display = 'none';
+                    bearGame.classList.add('active');
+                }, 500);
+            });
+            
+            // إغلاق لعبة الدب
+            closeBear.addEventListener('click', function() {
+                bearGame.classList.remove('active');
+                homePage.style.display = 'flex';
+                setTimeout(() => {
+                    homePage.style.opacity = '1';
+                }, 50);
+            });
+            
+            // إرسال رسالة للدب
+            sendMessage.addEventListener('click', function() {
+                if (bearInput.value.trim() !== '') {
+                    const originalMessage = bearInput.value;
+                    bearMessage.innerHTML = `
+                        <div style="margin-bottom: 10px;">💌 رسالتكِ:</div>
+                        <div style="background: #fff; padding: 10px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px;">
+                            "${originalMessage}"
+                        </div>
+                        <div style="color: #e74c3c; font-weight: bold;">سيتم إرسالها لطارق! ❤️</div>
+                    `;
+                    bearInput.value = '';
+                    
+                    setTimeout(() => {
+                        const randomMessage = bearMessages[Math.floor(Math.random() * bearMessages.length)];
+                        bearMessage.innerHTML = randomMessage + " 🐻";
+                    }, 4000);
+                } else {
+                    bearMessage.innerHTML = "لا تترددي في كتابة رسالة حلوة من القلب! 🐻💌";
+                }
+            });
+            
+            // إنشاء تأثير القلوب
+            function createHearts() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍'][Math.floor(Math.random() * 9)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                heart.style.opacity = Math.random() * 0.5 + 0.5;
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }
+            
+            // قلوب متحركة بشكل دوري
+            setInterval(createHearts, 300);
+            
+            // تأثير كتابة النص في العنوان
+            setTimeout(() => {
+                document.querySelector('.typing-effect').style.borderRight = 'none';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
